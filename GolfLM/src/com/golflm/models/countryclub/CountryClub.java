@@ -8,10 +8,8 @@ import java.util.List;
 
 import javax.management.ImmutableDescriptor;
 
-import com.golflm.models.Address;
 import com.golflm.models.Amenety;
 import com.golflm.models.Contact;
-import com.golflm.models.GolfCourse;
 import com.golflm.models.Media;
 import com.golflm.models.Note;
 import com.golflm.models.UID;
@@ -77,7 +75,7 @@ public class CountryClub {
      *            Address of the country club or golf course.
      * @param golfCourses
      *            Description of golf courses at the country club.
-     *            The list
+     *            WARNING : This list will be copied in another one.
      * @param uid
      *            Unique identifier for an application. OPTIONAL
      * @param ownershipType
