@@ -1,5 +1,5 @@
 package com.golflm.models;
 
-public class GolfCourse {
+public class GPSPoint {
 
 }
