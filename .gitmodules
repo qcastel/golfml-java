@@ -1,0 +1,3 @@
+[submodule "GolfLM/lib/geotools"]
+	path = GolfLM/lib/geotools
+	url = https://github.com/geotools/geotools.git
