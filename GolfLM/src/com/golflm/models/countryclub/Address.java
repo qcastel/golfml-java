@@ -13,7 +13,7 @@ import com.golflm.models.GPSPoint;
  * @version 1.0
  * 
  */
-public class Address {
+public class Address implements Comparable<Address>{
 
 	private static final String DEFAULT_MUNICIPALITY = "";
 	private static final String DEFAULT_REGION = "";
@@ -135,5 +135,96 @@ public class Address {
     public GPSPoint getGpsPoint() {
         return gpsPoint;
     }
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((country == null) ? 0 : country.hashCode());
+		result = prime * result
+				+ ((gpsPoint == null) ? 0 : gpsPoint.hashCode());
+		result = prime * result
+				+ ((municipality == null) ? 0 : municipality.hashCode());
+		result = prime * result
+				+ ((postalCode == null) ? 0 : postalCode.hashCode());
+		result = prime * result + ((region == null) ? 0 : region.hashCode());
+		result = prime * result + ((street == null) ? 0 : street.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Address other = (Address) obj;
+		if (country == null) {
+			if (other.country != null)
+				return false;
+		} else if (!country.equals(other.country))
+			return false;
+		if (gpsPoint == null) {
+			if (other.gpsPoint != null)
+				return false;
+		} else if (!gpsPoint.equals(other.gpsPoint))
+			return false;
+		if (municipality == null) {
+			if (other.municipality != null)
+				return false;
+		} else if (!municipality.equals(other.municipality))
+			return false;
+		if (postalCode == null) {
+			if (other.postalCode != null)
+				return false;
+		} else if (!postalCode.equals(other.postalCode))
+			return false;
+		if (region == null) {
+			if (other.region != null)
+				return false;
+		} else if (!region.equals(other.region))
+			return false;
+		if (street == null) {
+			if (other.street != null)
+				return false;
+		} else if (!street.equals(other.street))
+			return false;
+		return true;
+	}
+
+	/**
+	 * Return a description of this Address. The exact details of the representation are unspecified
+	 * and are subject to change.
+	 */
+	@Override
+	public String toString() {
+		return "Address [country=" + country + ", postalCode=" + postalCode
+				+ ", municipality=" + municipality + ", region=" + region
+				+ ", street=" + street + ", gpsPoint=" + gpsPoint + "]";
+	}
+
+
+	@Override
+	public int compareTo(Address o) {
+		int order = this.country.compareTo(o.country);
+		if(order != 0) { return order;}
+		order = this.postalCode.compareTo(o.postalCode);
+		if(order != 0) { return order;}
+		order = this.municipality.compareTo(o.municipality);
+		if(order != 0) { return order;}
+		order = this.region.compareTo(o.region);
+		if(order != 0) { return order;}
+		order = this.street.compareTo(o.street);
+		if(order != 0) { return order;}
+		order = this.gpsPoint.compareTo(o.gpsPoint);
+		if(order != 0) { return order;}
+		return 0;
+	}
+    
+    
 
 }

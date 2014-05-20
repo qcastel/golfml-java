@@ -7,7 +7,7 @@ package com.golflm.models;
  * @version 1.0
  *
  */
-public class Country {
+public class Country implements Comparable<Country>{
 
     protected ISO3166CountryCode code;
 
@@ -27,12 +27,37 @@ public class Country {
         return code;
     }
 
-    /**
-     * @param code the code to set
-     */
-    public void setCode(ISO3166CountryCode code) {
-        this.code = code;
-    }
-    
+	@Override
+	public int compareTo(Country o) {
+		return code.compareTo(o.code);
+	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((code == null) ? 0 : code.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Country other = (Country) obj;
+		if (code != other.code)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Country [code=" + code + "]";
+	}
+
+    
 }
