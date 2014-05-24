@@ -10,10 +10,12 @@ import javax.management.ImmutableDescriptor;
 
 import com.golflm.models.Amenety;
 import com.golflm.models.Contact;
+import com.golflm.models.Country;
 import com.golflm.models.Media;
 import com.golflm.models.Note;
 import com.golflm.models.UID;
 import com.golflm.models.Version;
+import com.golflm.models.countryclub.Address.Builder;
 
 /**
  * A country-club is a place where we can find one or more golf courses at the
@@ -24,102 +26,110 @@ import com.golflm.models.Version;
  * @version 1.0
  * 
  */
-public class CountryClub {
-
-    protected String name;
-    protected Address address;
-    protected List<GolfCourse> golfCourses;
+public final class CountryClub {
+	
+	private final static UID DEFAULT_UID = null;
+	private final static CountryClubType DEFAULT_OWNER_SHIP = null;
+	private final static Contact DEFAULT_CONTACT = null;
+	private final static Amenety DEFAULT_AMENETY = null;
+	private final static Note DEFAULT_NOTE = null;
+	private final static Media DEFAULT_MEDIA = null;
+	private final static Version DEFAULT_VERSION = null;
+	
+	private final String name;
+	private final Address address;
+	private final List<GolfCourse> golfCourses;
 
     // Optional parameters
 
-    protected UID uid;
-    protected CountryClubType ownershipType;
-    protected Contact contact;
-    protected Amenety amenety;
-    protected Note note;
-    protected Media media;
-    protected Version version;
-    
-    /**
-     * Construct a CountryClub with a minimum of parameters
-     * 
-     * @param name
-     *            Name of the country club.
-     * @param address
-     *            Address of the country club or golf course.
-     * @param golfCourses
-     *            Description of golf courses at the country club
-     *            WARNING : This list will be copied in another one.
+	private final UID uid;
+	private final CountryClubType ownershipType;
+	private final Contact contact;
+	private final Amenety amenety;
+	private final Note note;
+	private final Media media;
+	private final Version version;
+	
+    public static class Builder {
+    	
+    	private final String name;
+    	private final Address address;
+    	private final List<GolfCourse> golfCourses;
 
-     * @throws IllegalArgumentException if the specified parameters non optional is at null
-     */
-    public CountryClub(String name, Address address,
-            List<GolfCourse> golfCourses) {
-        super();
-        if (name == null | address == null | golfCourses == null) {
-            throw new IllegalArgumentException(
-                    "Some of the required parameters are null. Please check the javadoc");
+        // Optional parameters
+
+    	private UID uid = DEFAULT_UID;
+    	private CountryClubType ownershipType = DEFAULT_OWNER_SHIP;
+    	private Contact contact = DEFAULT_CONTACT;
+    	private Amenety amenety = DEFAULT_AMENETY;
+    	private Note note = DEFAULT_NOTE;
+    	private Media media = DEFAULT_MEDIA;
+    	private Version version = DEFAULT_VERSION;
+    	
+    	public Builder(String name, Address address, List<GolfCourse> golfCourses){
+    		if (name == null | address == null | golfCourses == null) {
+                throw new NullPointerException(
+                        "One or more parameters are null");
+            }
+
+            this.name = name;
+            this.address = address;
+            this.golfCourses = Collections.unmodifiableList(golfCourses);
         }
-        this.name = name;
-        this.address = address;
-        this.golfCourses = new ArrayList<GolfCourse>(golfCourses);
-    }
-    
-    /**
-     * Construct a CountryClub with all parameters possible. 
-     * Optional parameters labelled with 'OPTIONAL' could be set a null.
-     * 
-     * @param name
-     *            Name of the country club.
-     * @param address
-     *            Address of the country club or golf course.
-     * @param golfCourses
-     *            Description of golf courses at the country club.
-     *            WARNING : This list will be copied in another one.
-     * @param uid
-     *            Unique identifier for an application. OPTIONAL
-     * @param ownershipType
-     *            Name of the country club.
-     * @param contact
-     *            Contact for the golf course
-     * @param amenety
-     *            Amenety available at the country club
-     * @param note
-     *            Note about the country club.
-     * @param media
-     *            Media for the country club
-     * @param version
-     *            version of this instance
-     * @throws IllegalArgumentException if the specified parameters non optional is at null
-     */
-    public CountryClub(String name, Address address,
-            List<GolfCourse> golfCourses, UID uid,
-            CountryClubType ownershipType, Contact contact, Amenety amenety,
-            Note note, Media media, Version version) {
-        this(name, address, golfCourses);
 
-        this.uid = uid;
-        this.ownershipType = ownershipType;
-        this.contact = contact;
-        this.amenety = amenety;
-        this.note = note;
-        this.media = media;
-        this.version = version;
+		public void uid(UID uid) {
+			this.uid = uid;
+		}
+
+		public void ownershipType(CountryClubType ownershipType) {
+			this.ownershipType = ownershipType;
+		}
+
+		public void contact(Contact contact) {
+			this.contact = contact;
+		}
+
+		public void amenety(Amenety amenety) {
+			this.amenety = amenety;
+		}
+
+		public void note(Note note) {
+			this.note = note;
+		}
+
+		public void media(Media media) {
+			this.media = media;
+		}
+
+		public void version(Version version) {
+			this.version = version;
+		}
+        
     }
-    
+
+    /**
+     * A builder is necessary for instantiate this object. 
+     * @param builder
+     */
+    private CountryClub(Builder builder) {
+        this.name = builder.name;
+        this.address = builder.address;
+        this.golfCourses = builder.golfCourses;
+        this.uid = builder.uid;
+        this.ownershipType = builder.ownershipType;
+        this.contact = builder.contact;
+        this.amenety = builder.amenety;
+        this.note = builder.note;
+        this.media = builder.media;
+        this.version = builder.version;
+    }
+   
+
     /**
      * @return the name
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * @param name
-     *            the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
@@ -130,26 +140,10 @@ public class CountryClub {
     }
 
     /**
-     * @param address
-     *            the address to set
-     */
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    /**
      * @return the golfCourses
      */
     public List<GolfCourse> getGolfCourses() {
         return this.golfCourses;
-    }
-
-    /**
-     * @param golfCourse
-     *            the golfCourses to set
-     */
-    public void setGolfCourses(List<GolfCourse> golfCourse) {
-        this.golfCourses = golfCourse;
     }
 
     /**
@@ -159,27 +153,12 @@ public class CountryClub {
         return uid;
     }
 
-    /**
-     * @param uid
-     *            the uid to set
-     */
-    public void setUid(UID uid) {
-        this.uid = uid;
-    }
 
     /**
      * @return the ownershipType
      */
     public CountryClubType getOwnershipType() {
         return ownershipType;
-    }
-
-    /**
-     * @param ownershipType
-     *            the ownershipType to set
-     */
-    public void setOwnershipType(CountryClubType ownershipType) {
-        this.ownershipType = ownershipType;
     }
 
     /**
@@ -190,26 +169,10 @@ public class CountryClub {
     }
 
     /**
-     * @param contact
-     *            the contact to set
-     */
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
-
-    /**
      * @return the amenety
      */
     public Amenety getAmenety() {
         return amenety;
-    }
-
-    /**
-     * @param amenety
-     *            the amenety to set
-     */
-    public void setAmenety(Amenety amenety) {
-        this.amenety = amenety;
     }
 
     /**
@@ -220,26 +183,10 @@ public class CountryClub {
     }
 
     /**
-     * @param note
-     *            the note to set
-     */
-    public void setNote(Note not) {
-        this.note = not;
-    }
-
-    /**
      * @return the media
      */
     public Media getMedia() {
         return media;
-    }
-
-    /**
-     * @param media
-     *            the media to set
-     */
-    public void setMedia(Media media) {
-        this.media = media;
     }
 
     /**
@@ -248,13 +195,4 @@ public class CountryClub {
     public Version getVersion() {
         return version;
     }
-
-    /**
-     * @param version
-     *            the version to set
-     */
-    public void setVersion(Version version) {
-        this.version = version;
-    }
-
 }
