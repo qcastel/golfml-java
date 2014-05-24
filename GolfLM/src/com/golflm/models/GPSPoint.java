@@ -6,17 +6,17 @@ package com.golflm.models;
  * @author castel
  *
  */
-public class GPSPoint implements Comparable<GPSPoint>{
+public final class GPSPoint implements Comparable<GPSPoint>{
 
-    protected Double latitude;
-    protected Double longitude;
+	private final double latitude;
+    private final double longitude;
     
     /**
      * GPS point in a geographic system
      * @param latitude
      * @param longitude
      */
-    public GPSPoint(Double latitude, Double longitude) {
+    public GPSPoint(double latitude, double longitude) {
         super();
         this.latitude = latitude;
         this.longitude = longitude;
@@ -25,14 +25,14 @@ public class GPSPoint implements Comparable<GPSPoint>{
     /**
      * @return the latitude
      */
-    public Double getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
     /**
      * @return the longitude
      */
-    public Double getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
@@ -45,14 +45,16 @@ public class GPSPoint implements Comparable<GPSPoint>{
 		return 0;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((latitude == null) ? 0 : latitude.hashCode());
-		result = prime * result
-				+ ((longitude == null) ? 0 : longitude.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(latitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(longitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -65,15 +67,11 @@ public class GPSPoint implements Comparable<GPSPoint>{
 		if (getClass() != obj.getClass())
 			return false;
 		GPSPoint other = (GPSPoint) obj;
-		if (latitude == null) {
-			if (other.latitude != null)
-				return false;
-		} else if (!latitude.equals(other.latitude))
+		if (Double.doubleToLongBits(latitude) != Double
+				.doubleToLongBits(other.latitude))
 			return false;
-		if (longitude == null) {
-			if (other.longitude != null)
-				return false;
-		} else if (!longitude.equals(other.longitude))
+		if (Double.doubleToLongBits(longitude) != Double
+				.doubleToLongBits(other.longitude))
 			return false;
 		return true;
 	}

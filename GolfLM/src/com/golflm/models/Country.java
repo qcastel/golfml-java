@@ -7,9 +7,9 @@ package com.golflm.models;
  * @version 1.0
  *
  */
-public class Country implements Comparable<Country>{
+public final class Country implements Comparable<Country>{
 
-    protected ISO3166CountryCode code;
+	private final ISO3166CountryCode code;
 
     /**
      * Constructor with a unique code, based on ISO 3166

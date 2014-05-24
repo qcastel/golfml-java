@@ -13,7 +13,7 @@ import com.golflm.models.GPSPoint;
  * @version 1.0
  * 
  */
-public class Address implements Comparable<Address>{
+public final class Address implements Comparable<Address>{
 
 	private static final String DEFAULT_MUNICIPALITY = "";
 	private static final String DEFAULT_REGION = "";
