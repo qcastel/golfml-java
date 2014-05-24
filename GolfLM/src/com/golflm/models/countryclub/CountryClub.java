@@ -5,10 +5,11 @@ import java.util.List;
 
 import com.golflm.models.Amenety;
 import com.golflm.models.Contact;
-import com.golflm.models.Media;
 import com.golflm.models.Note;
 import com.golflm.models.UID;
 import com.golflm.models.Version;
+import com.golflm.models.media.Media;
+import com.golflm.models.media.MediaContent;
 
 /**
  * A country-club is a place where we can find one or more golf courses at the
