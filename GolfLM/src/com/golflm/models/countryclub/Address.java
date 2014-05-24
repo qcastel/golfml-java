@@ -51,6 +51,11 @@ public final class Address implements Comparable<Address>{
         private String street = DEFAULT_STREET;
         private GPSPoint gpsPoint = DEFAULT_GPSPOINT;
         
+        /**
+    	 * Builder with the required parameters. They can't be null or a nullPointerException will be throw
+         * @param country
+         * @param postalCode
+         */
         public Builder(Country country, String postalCode){
             if (country == null | postalCode == null) {
                 throw new NullPointerException(
@@ -61,26 +66,51 @@ public final class Address implements Comparable<Address>{
             this.postalCode = postalCode;
         }
         
+    	/**
+    	 * Set the municipality optional parameter
+    	 * @param municipality
+    	 * @return builder Builder is return for linked the optional parameters
+    	 */
         public Builder municipality(String municipality) {
         	this.municipality = municipality;
         	return this;
         }
         
+    	/**
+    	 * Set the region optional parameter
+    	 * @param region
+    	 * @return builder Builder is return for linked the optional parameters
+    	 */
         public Builder region(String region) {
         	this.region = region;
         	return this;
         }
         
+    	/**
+    	 * Set the street optional parameter
+    	 * @param street
+    	 * @return builder Builder is return for linked the optional parameters
+    	 */
         public Builder street(String street) {
         	this.street = street;
         	return this;
         }
         
+    	/**
+    	 * Set the gpsPoint optional parameter
+    	 * @param gpsPoint
+    	 * @return builder Builder is return for linked the optional parameters
+    	 */
         public Builder gpsPoint(GPSPoint gpsPoint) {
         	this.gpsPoint = gpsPoint;
         	return this;
         }
         
+        /**
+         * Build an Address from builder attributes
+         * @return Address build with every builder parameters. 
+         * Optional parameters unset will be setted with a default value
+         */
         public Address build() {
         	return new Address(this);
         }
