@@ -1,21 +1,14 @@
 package com.golflm.models.countryclub;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javax.management.ImmutableDescriptor;
-
 import com.golflm.models.Amenety;
 import com.golflm.models.Contact;
-import com.golflm.models.Country;
 import com.golflm.models.Media;
 import com.golflm.models.Note;
 import com.golflm.models.UID;
 import com.golflm.models.Version;
-import com.golflm.models.countryclub.Address.Builder;
 
 /**
  * A country-club is a place where we can find one or more golf courses at the
@@ -26,8 +19,9 @@ import com.golflm.models.countryclub.Address.Builder;
  * @version 1.0
  * 
  */
-public final class CountryClub {
+public final class CountryClub implements Comparable<CountryClub>{
 	
+	//TODO Maybe having better default values will be great
 	private final static UID DEFAULT_UID = null;
 	private final static CountryClubType DEFAULT_OWNER_SHIP = null;
 	private final static Contact DEFAULT_CONTACT = null;
@@ -50,6 +44,15 @@ public final class CountryClub {
 	private final Media media;
 	private final Version version;
 	
+    /**
+     * Use this builder for creating a CountryClub instance.
+     * Required parameters are in the constructor and optional have a dedicated method.
+     * 
+     * Example of use : 
+     * CountryClub c = CountryClub.Builder("Chipping Sodbury", chipSodAddress, chipSodGolfCourses).contact(chipSodContact).build();
+     * @author quentin
+     *
+     */
     public static class Builder {
     	
     	private final String name;
@@ -66,6 +69,12 @@ public final class CountryClub {
     	private Media media = DEFAULT_MEDIA;
     	private Version version = DEFAULT_VERSION;
     	
+    	/**
+    	 * Builder with the required parameters. They can't be null or a nullPointerException will be throw
+    	 * @param name
+    	 * @param address
+    	 * @param golfCourses
+    	 */
     	public Builder(String name, Address address, List<GolfCourse> golfCourses){
     		if (name == null | address == null | golfCourses == null) {
                 throw new NullPointerException(
@@ -77,34 +86,84 @@ public final class CountryClub {
             this.golfCourses = Collections.unmodifiableList(golfCourses);
         }
 
-		public void uid(UID uid) {
+    	/**
+    	 * Set the UID optional parameter
+    	 * @param uid
+    	 * @return builder Builder is return for linked the optional parameters
+    	 */
+		public Builder uid(UID uid) {
 			this.uid = uid;
+			return this;
 		}
-
-		public void ownershipType(CountryClubType ownershipType) {
+		
+    	/**
+    	 * Set the ownershipType optional parameter
+    	 * @param ownershipType
+    	 * @return builder Builder is return for linked the optional parameters
+     	 */
+		public Builder ownershipType(CountryClubType ownershipType) {
 			this.ownershipType = ownershipType;
+			return this;
 		}
 
-		public void contact(Contact contact) {
+		/**
+    	 * Set the contact optional parameter
+		 * @param contact
+    	 * @return builder Builder is return for linked the optional parameters
+		 */
+		public Builder contact(Contact contact) {
 			this.contact = contact;
+			return this;
 		}
-
-		public void amenety(Amenety amenety) {
+		
+		/**
+    	 * Set the amenety optional parameter
+		 * @param amenety
+    	 * @return builder Builder is return for linked the optional parameters
+		 */
+		public Builder amenety(Amenety amenety) {
 			this.amenety = amenety;
+			return this;
 		}
-
-		public void note(Note note) {
+		
+		/**
+    	 * Set the note optional parameter
+		 * @param note
+    	 * @return builder Builder is return for linked the optional parameters
+		 */
+		public Builder note(Note note) {
 			this.note = note;
+			return this;
 		}
-
-		public void media(Media media) {
+		
+		/**
+    	 * Set the media optional parameter
+		 * @param media
+    	 * @return builder Builder is return for linked the optional parameters
+		 */
+		public Builder media(Media media) {
 			this.media = media;
+			return this;
 		}
-
-		public void version(Version version) {
+		
+		/**
+    	 * Set the version optional parameter
+		 * @param version
+    	 * @return builder Builder is return for linked the optional parameters
+		 */
+		public Builder version(Version version) {
 			this.version = version;
+			return this;
 		}
         
+        /**
+         * Build an CountryClub from builder attributes
+         * @return CountryClub build with every builder parameters. 
+         * Optional parameters unset will be setted with a default value
+         */
+		public CountryClub build() {
+			return new CountryClub(this);
+		}
     }
 
     /**
@@ -195,4 +254,121 @@ public final class CountryClub {
     public Version getVersion() {
         return version;
     }
+
+	@Override
+	public String toString() {
+		return "CountryClub [name=" + name + ", address=" + address
+				+ ", golfCourses=" + golfCourses + ", uid=" + uid
+				+ ", ownershipType=" + ownershipType + ", contact=" + contact
+				+ ", amenety=" + amenety + ", note=" + note + ", media="
+				+ media + ", version=" + version + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((amenety == null) ? 0 : amenety.hashCode());
+		result = prime * result + ((contact == null) ? 0 : contact.hashCode());
+		result = prime * result
+				+ ((golfCourses == null) ? 0 : golfCourses.hashCode());
+		result = prime * result + ((media == null) ? 0 : media.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((note == null) ? 0 : note.hashCode());
+		result = prime * result
+				+ ((ownershipType == null) ? 0 : ownershipType.hashCode());
+		result = prime * result + ((uid == null) ? 0 : uid.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CountryClub other = (CountryClub) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
+		if (amenety == null) {
+			if (other.amenety != null)
+				return false;
+		} else if (!amenety.equals(other.amenety))
+			return false;
+		if (contact == null) {
+			if (other.contact != null)
+				return false;
+		} else if (!contact.equals(other.contact))
+			return false;
+		if (golfCourses == null) {
+			if (other.golfCourses != null)
+				return false;
+		} else if (!golfCourses.equals(other.golfCourses))
+			return false;
+		if (media == null) {
+			if (other.media != null)
+				return false;
+		} else if (!media.equals(other.media))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (note == null) {
+			if (other.note != null)
+				return false;
+		} else if (!note.equals(other.note))
+			return false;
+		if (ownershipType != other.ownershipType)
+			return false;
+		if (uid == null) {
+			if (other.uid != null)
+				return false;
+		} else if (!uid.equals(other.uid))
+			return false;
+		if (version == null) {
+			if (other.version != null)
+				return false;
+		} else if (!version.equals(other.version))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int compareTo(CountryClub o) {
+		int order = this.name.compareTo(o.name);
+		if(order != 0) { return order;}
+		order = this.address.compareTo(o.address);
+		if(order != 0) { return order;}
+		if(this.golfCourses.size() < o.golfCourses.size()) { return -1;}
+		if(this.golfCourses.size() > o.golfCourses.size()) { return 1;}
+		
+		for(int i = 0; i < golfCourses.size(); i++) {
+			order = this.golfCourses.get(i).compareTo(o.golfCourses.get(i));
+			if(order != 0) { return order;}
+		}
+
+		if(order != 0) { return order;}
+		order = this.contact.compareTo(o.contact);
+		if(order != 0) { return order;}
+		order = this.amenety.compareTo(o.amenety);
+		if(order != 0) { return order;}
+		order = this.note.compareTo(o.note);
+		if(order != 0) { return order;}
+		order = this.media.compareTo(o.media);
+		if(order != 0) { return order;}
+		order = this.version.compareTo(o.version);
+		if(order != 0) { return order;}
+		return 0;
+	}
+
 }
