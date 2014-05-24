@@ -22,6 +22,9 @@ public final class Address implements Comparable<Address>{
 	
     private final Country country;
     private final String postalCode;
+    
+    // Optional parameters
+
     private final String municipality;
     private final String region;
     private final String street;
@@ -40,6 +43,9 @@ public final class Address implements Comparable<Address>{
     	
         private final Country country;
         private final String postalCode;
+        
+        // Optional parameters
+ 
         private String municipality = DEFAULT_MUNICIPALITY;
         private String region = DEFAULT_REGION;
         private String street = DEFAULT_STREET;
