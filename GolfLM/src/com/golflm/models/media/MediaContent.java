@@ -9,12 +9,31 @@ public class MediaContent extends MediaSkeleton {
 
 	private final String content;
 
-	public static class Builder extends MediaSkeleton.Builder {
+    /**
+     * Use this builder for creating an MediaContent instance.
+     * Required parameters are in the constructor and optional have a dedicated method.
+     * 
+     * Example of use : 
+     * Address a = MediaContent.Builder("file name", "content...").type(MediaType.VIDEO).build();
+     * @author quentin
+     *
+     */
+	public static class Builder extends MediaSkeleton.BuilderSkeleton {
 
 		private final String content;
 		
+		/**
+    	 * Builder with the required parameters. 
+    	 * They can't be null or a nullPointerException will be throw
+		 * @param name
+		 * @param content
+		 */
 		public Builder(String name, String content) {
 			super(name);
+            if (content == null) {
+                throw new NullPointerException(
+                        "content is null");
+            }
 			this.content= content;
 		}
 
@@ -25,6 +44,10 @@ public class MediaContent extends MediaSkeleton {
 		
 	}
 	
+    /**
+     * A builder is necessary for instantiate this object. 
+     * @param builder
+     */
 	private MediaContent(Builder builder) {
 		super(builder);
 		this.content = builder.content;

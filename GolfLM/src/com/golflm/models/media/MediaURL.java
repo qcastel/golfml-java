@@ -11,7 +11,16 @@ public class MediaURL extends MediaSkeleton {
 
 	private final URL url;
 
-	public static class Builder extends MediaSkeleton.Builder {
+	/**
+	 *  Use this builder for creating an MediaURL instance.
+	 * Required parameters are in the constructor and optional have a dedicated method.
+	 * 
+	 * Example of use : 
+	 * Address a = MediaContent.Builder("file name", url).type(MediaType.VIDEO).build();
+	 * @author quentin
+	 *
+	 */
+	public static class Builder extends MediaSkeleton.BuilderSkeleton {
 
 		private final URL url;
 		
@@ -27,6 +36,10 @@ public class MediaURL extends MediaSkeleton {
 		
 	}
 	
+    /**
+     * A builder is necessary for instantiate this object. 
+     * @param builder
+     */
 	private MediaURL(Builder builder) {
 		super(builder);
 		this.url = builder.url;

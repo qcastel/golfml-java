@@ -14,7 +14,13 @@ public abstract class MediaSkeleton implements Media {
 	private final MediaType type;
 	private final String description;
 
-	public static abstract class Builder {
+    /**
+     * Builder skeleton for a media class. 
+     * Extends this class if you want to add fields in your Media Skeleton
+     * @author quentin
+     *
+     */
+	public static abstract class BuilderSkeleton {
 		
 		private final String name;
 		private String contentType;
@@ -26,7 +32,11 @@ public abstract class MediaSkeleton implements Media {
     	 * Builder with the required parameters. They can't be null or a nullPointerException will be throw
 		 * @param name
 		 */
-		public Builder(String name) {
+		public BuilderSkeleton(String name) {
+            if (name == null) {
+                throw new NullPointerException(
+                        "name is null");
+            }
 			this.name = name;
 		}
 		
@@ -35,7 +45,7 @@ public abstract class MediaSkeleton implements Media {
     	 * @param contentType
     	 * @return builder Builder is return for linked the optional parameters
     	 */
-		public Builder contentType(String contentType) {
+		public BuilderSkeleton contentType(String contentType) {
 			this.contentType = contentType;
 			return this;
 		}
@@ -45,7 +55,7 @@ public abstract class MediaSkeleton implements Media {
     	 * @param other
     	 * @return builder Builder is return for linked the optional parameters
     	 */
-		public Builder other(String other) {
+		public BuilderSkeleton other(String other) {
 			this.other = other;
 			return this;
 		}
@@ -55,7 +65,7 @@ public abstract class MediaSkeleton implements Media {
     	 * @param type
     	 * @return builder Builder is return for linked the optional parameters
     	 */
-		public Builder type(MediaType type) {
+		public BuilderSkeleton type(MediaType type) {
 			this.type = type;
 			return this;
 		}
@@ -65,7 +75,7 @@ public abstract class MediaSkeleton implements Media {
     	 * @param description
     	 * @return builder Builder is return for linked the optional parameters
     	 */
-		public Builder description(String description) {
+		public BuilderSkeleton description(String description) {
 			this.description = description;
 			return this;
 		}
@@ -77,7 +87,7 @@ public abstract class MediaSkeleton implements Media {
      * A builder is necessary for instantiate this object. 
      * @param builder
      */
-	protected MediaSkeleton(Builder builder) {
+	protected MediaSkeleton(BuilderSkeleton builder) {
 		this.name = builder.name;
 		this.contentType = builder.contentType;
 		this.other = builder.other;
