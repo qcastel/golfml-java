@@ -1,5 +1,11 @@
 package com.golflm.models;
 
+/**
+ * Amenety available at the country club premises. 
+ * Ameneties have a type attribute to help identify the amenety.
+ * @author quentin
+ *
+ */
 public class Amenety implements Comparable<Amenety>{
 
 	private final String content;
@@ -23,6 +29,10 @@ public class Amenety implements Comparable<Amenety>{
     	private AmenetyType type;
     	private String other;
     	
+    	/**
+    	 * Builder with the required parameters. They can't be null or a nullPointerException will be throw
+    	 * @param content
+    	 */
         public Builder(String content){
             if (content == null) {
                 throw new NullPointerException(
@@ -31,21 +41,40 @@ public class Amenety implements Comparable<Amenety>{
         	this.content = content;
         }
         
+    	/**
+    	 * Set the type optional parameter
+    	 * @param type
+    	 * @return builder Builder is return for linked the optional parameters
+    	 */
         public Builder type(AmenetyType type) {
         	this.type = type;
         	return this;
         }
         
+    	/**
+    	 * Set the other optional parameter
+    	 * @param other
+    	 * @return builder Builder is return for linked the optional parameters
+    	 */        
         public Builder other(String other) {
         	this.other = other;
         	return this;
         }
 
+        /**
+         * Build an Amenety from builder attributes
+         * @return Amenety build with every builder parameters. 
+         * Optional parameters unset will be setted with a default value
+         */
         public Amenety build() {
         	return new Amenety(this);
         }
     }
     
+    /**
+     * A builder is necessary for instantiate this object. 
+     * @param builder
+     */
     private Amenety(Builder builder) {
     	this.content = builder.content;
     	this.type = builder.type;
@@ -67,6 +96,7 @@ public class Amenety implements Comparable<Amenety>{
 	}
 
 	/**
+	 * Alternate value for an attribute.
 	 * @return the other
 	 */
 	public String getOther() {
