@@ -9,10 +9,10 @@ import java.util.regex.Pattern;
  */
 public class LocalisedText implements Comparable<LocalisedText> {
 
-	private static String IETF_LANG_TAG_REGEX = "[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*";
-	private static Pattern pattern;
+	private static final String IETF_LANG_TAG_REGEX = "[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*";
+	private static final Pattern IETF_LANG_TAG_PATTERN;
 	static {
-		pattern =  Pattern.compile(IETF_LANG_TAG_REGEX);
+		IETF_LANG_TAG_PATTERN =  Pattern.compile(IETF_LANG_TAG_REGEX);
 	}
 	
 	private final String content;
@@ -25,7 +25,7 @@ public class LocalisedText implements Comparable<LocalisedText> {
 	 * @param content
 	 */
 	public LocalisedText(String lang, String content) {
-		if(!pattern.matcher(lang).matches()) {
+		if(!IETF_LANG_TAG_PATTERN.matcher(lang).matches()) {
 			throw new IllegalArgumentException("Lang '" + lang + "' should matches expression '" + IETF_LANG_TAG_REGEX + "'");
 		}
 		this.lang = lang;
